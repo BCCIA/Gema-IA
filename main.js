@@ -1,3 +1,26 @@
+// -------------------- SEGURIDAD: PROTECCIÓN POR PIN --------------------
+const PIN_CORRECTO = "5703";
+
+function accesoPermitido() {
+  return localStorage.getItem("pinAccesoAutorizado") === "true";
+}
+
+function solicitarPin() {
+  const pinIngresado = prompt("Por favor, introduce el PIN de acceso:");
+
+  if (pinIngresado === PIN_CORRECTO) {
+    localStorage.setItem("pinAccesoAutorizado", "true");
+  } else {
+    alert("PIN incorrecto. No tienes permiso para acceder.");
+    document.body.innerHTML = "<h1 style='text-align:center; padding-top:20%; font-family:sans-serif;'>Acceso denegado</h1>";
+    throw new Error("PIN incorrecto - ejecución detenida");
+  }
+}
+
+if (!accesoPermitido()) {
+  solicitarPin();
+}
+
 // -------------------- SEGURIDAD --------------------
 document.addEventListener("contextmenu", (e) => e.preventDefault());
 
@@ -153,7 +176,6 @@ function iniciarRefresco() {
     message.style.display = "none";
     document.body.appendChild(message);
 
-    // Spinner animation
     const style = document.createElement("style");
     style.innerHTML = `
       @keyframes spin {
@@ -187,8 +209,9 @@ function iniciarRefresco() {
     }, 5000);
   }
 
-  setTimeout(startRefreshSequence, 5 * 60 * 1000); // <-- 5 minutos
+  setTimeout(startRefreshSequence, 5 * 60 * 1000);
 }
 
 window.addEventListener("DOMContentLoaded", iniciarRefresco);
+
 
