@@ -214,8 +214,7 @@ function iniciarRefresco() {
 
 window.addEventListener("DOMContentLoaded", iniciarRefresco);
 
-// -------------------- BOTÓN DE REFRESCAR MANUAL --------------------
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const refreshBtn = document.getElementById("refresh-btn");
 
   if (refreshBtn) {
