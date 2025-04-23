@@ -214,7 +214,7 @@ function iniciarRefresco() {
 
 window.addEventListener("DOMContentLoaded", iniciarRefresco);
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
   const refreshBtn = document.getElementById("refresh-btn");
 
   if (refreshBtn) {
