@@ -227,19 +227,20 @@ window.addEventListener("DOMContentLoaded", () => {
       const iframe = document.querySelector("iframe.did-chat-iframe");
 
       try {
-        const micBtn = iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
+        const micBtn =
+          iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
+
         if (micBtn) {
           micBtn.click();
           console.log("🎤 Micrófono activado desde botón externo");
         } else {
-          alert("No se encontró el botón del micrófono dentro del asistente.");
+          alert("No se encontró el botón del micrófono dentro del iframe.");
         }
       } catch (err) {
-        console.error("No se puede acceder al iframe por políticas de seguridad (cross-origin).", err);
-        alert("No se puede activar el micrófono automáticamente.");
+        console.error("⛔ Error accediendo al iframe:", err);
+        alert("No se pudo acceder al contenido del asistente.");
       }
     });
   }
 });
-
 
