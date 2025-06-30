@@ -221,15 +221,16 @@ window.addEventListener("DOMContentLoaded", () => {
     refreshBtn.addEventListener("click", () => location.reload());
   }
 
-  const micButton = document.getElementById("mic-toggle");
-  if (micButton) {
-    micButton.addEventListener("click", () => {
-      const iframe = document.querySelector("iframe.did-chat-iframe");
-      const micBtn = iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
+ const micButton = document.getElementById("mic-toggle");
 
-      if (micBtn) {
-        micBtn.click();
-      }
-    });
-  }
-});
+if (micButton) {
+  micButton.addEventListener("click", () => {
+    const iframe = document.querySelector("iframe.did-chat-iframe");
+
+    const micBtn = iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
+    if (micBtn) {
+      micBtn.click();
+      console.log("🎤 Micrófono activado desde botón externo");
+    }
+  });
+}
