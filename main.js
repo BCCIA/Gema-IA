@@ -21,7 +21,7 @@ if (!accesoPermitido()) {
   solicitarPin();
 }
 
-// -------------------- SEGURIDAD --------------------
+// -------------------- SEGURIDAD: BLOQUEO DE INSPECCIÓN --------------------
 document.addEventListener("contextmenu", (e) => e.preventDefault());
 
 function ctrlShiftKey(e, keyCode) {
@@ -30,11 +30,11 @@ function ctrlShiftKey(e, keyCode) {
 
 document.onkeydown = (e) => {
   if (
-    event.keyCode === 123 ||
-    ctrlShiftKey(e, "I") ||
-    ctrlShiftKey(e, "J") ||
-    ctrlShiftKey(e, "C") ||
-    (e.ctrlKey && e.keyCode === "U".charCodeAt(0))
+    event.keyCode === 123 || // F12
+    ctrlShiftKey(e, "I") ||  // Ctrl+Shift+I
+    ctrlShiftKey(e, "J") ||  // Ctrl+Shift+J
+    ctrlShiftKey(e, "C") ||  // Ctrl+Shift+C
+    (e.ctrlKey && e.keyCode === "U".charCodeAt(0)) // Ctrl+U
   )
     return false;
 };
@@ -42,7 +42,7 @@ document.onkeydown = (e) => {
 // -------------------- MENÚ --------------------
 const showMenu = (toggleId, navId) => {
   const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId);
+        nav = document.getElementById(navId);
 
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
@@ -148,7 +148,7 @@ gsap.from(".home-social", {
   stagger: 0.2,
 });
 
-// -------------------- REFRESCO AUTOMÁTICO --------------------
+// -------------------- REFRESCO AUTOMÁTICO CADA 3 MINUTOS --------------------
 function iniciarRefresco() {
   let refreshTimeout;
   let cancelRefresh = false;
@@ -196,7 +196,7 @@ function iniciarRefresco() {
       clearTimeout(refreshTimeout);
       document.removeEventListener("click", cancelAction);
       document.removeEventListener("touchstart", cancelAction);
-      setTimeout(startRefreshSequence, 1 * 60 * 1000);
+      setTimeout(startRefreshSequence, 3 * 60 * 1000); // ⏱️ reprograma a 3 min
     }
 
     document.addEventListener("click", cancelAction);
@@ -209,18 +209,37 @@ function iniciarRefresco() {
     }, 5000);
   }
 
-  setTimeout(startRefreshSequence, 1 * 60 * 1000);
+  setTimeout(startRefreshSequence, 3 * 60 * 1000); // ⏱️ primer ciclo en 3 min
 }
 
-window.addEventListener("DOMContentLoaded", iniciarRefresco);
-
+// -------------------- BOTONES EXTERNOS (REFRESH Y MIC) --------------------
 window.addEventListener("DOMContentLoaded", () => {
-  const refreshBtn = document.getElementById("refresh-btn");
+  iniciarRefresco();
 
+  const refreshBtn = document.getElementById("refresh-btn");
   if (refreshBtn) {
-    refreshBtn.addEventListener("click", () => {
-      location.reload();
+    refreshBtn.addEventListener("click", () => location.reload());
+  }
+
+  const micButton = document.getElementById("mic-toggle");
+  if (micButton) {
+    micButton.addEventListener("click", () => {
+      const iframe = document.querySelector("iframe.did-chat-iframe");
+
+      try {
+        const micBtn = iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
+        if (micBtn) {
+          micBtn.click();
+          console.log("🎤 Micrófono activado desde botón externo");
+        } else {
+          alert("No se encontró el botón del micrófono dentro del asistente.");
+        }
+      } catch (err) {
+        console.error("No se puede acceder al iframe por políticas de seguridad (cross-origin).", err);
+        alert("No se puede activar el micrófono automáticamente.");
+      }
     });
   }
 });
+
 
