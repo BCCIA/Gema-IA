@@ -225,13 +225,10 @@ window.addEventListener("DOMContentLoaded", () => {
   if (micButton) {
     micButton.addEventListener("click", () => {
       const iframe = document.querySelector("iframe.did-chat-iframe");
-
-      // Asumimos que el iframe y el botón están listos y disponibles
-      const micBtn = iframe.contentWindow.document.querySelector('[data-testid="send_record"]');
+      const micBtn = iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
 
       if (micBtn) {
         micBtn.click();
-        console.log("🎤 Micrófono activado desde botón externo");
       }
     });
   }
