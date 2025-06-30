@@ -226,21 +226,13 @@ window.addEventListener("DOMContentLoaded", () => {
     micButton.addEventListener("click", () => {
       const iframe = document.querySelector("iframe.did-chat-iframe");
 
-      try {
-        const micBtn =
-          iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
+      // Asumimos que el iframe y el botón están listos y disponibles
+      const micBtn = iframe.contentWindow.document.querySelector('[data-testid="send_record"]');
 
-        if (micBtn) {
-          micBtn.click();
-          console.log("🎤 Micrófono activado desde botón externo");
-        } else {
-          alert("No se encontró el botón del micrófono dentro del iframe.");
-        }
-      } catch (err) {
-        console.error("⛔ Error accediendo al iframe:", err);
-        alert("No se pudo acceder al contenido del asistente.");
+      if (micBtn) {
+        micBtn.click();
+        console.log("🎤 Micrófono activado desde botón externo");
       }
     });
   }
 });
-
