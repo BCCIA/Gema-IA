@@ -6,29 +6,11 @@
     <title>Gema</title>
     <link rel="shortcut icon" href="./chat.png" />
     <link rel="stylesheet" href="style.css" />
-    <style>
-      #mic-toggle {
-        position: fixed;
-        top: 20px;
-        right: 80px; /* separado del botón de refresco */
-        z-index: 9999;
-        background-color: #ff4081;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        font-size: 24px;
-        cursor: pointer;
-      }
-    </style>
   </head>
   <body>
     <div class="overlay first"></div>
     <div class="overlay second"></div>
     <div class="overlay third"></div>
-
     <main class="l-main bd-grid">
       <div class="home">
         <div class="home-information">
@@ -41,11 +23,8 @@
       </div>
     </main>
 
-    <!-- ✅ Botón de refrescar -->
+    <!-- ✅ Botón de refrescar (antes de los scripts) -->
     <ion-icon id="refresh-btn" name="refresh-circle-outline" title="Actualizar página"></ion-icon>
-
-    <!-- ✅ Botón de micrófono -->
-    <button id="mic-toggle" title="Hablar con Gema">🎤</button>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -58,22 +37,5 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-
-    <!-- Script para activar micrófono del iframe -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const micButton = document.getElementById("mic-toggle");
-
-        micButton.addEventListener("click", () => {
-          const iframe = document.querySelector("iframe.did-chat-iframe");
-          if (iframe && iframe.contentWindow) {
-            // Enviamos mensaje al iframe (si lo acepta)
-            iframe.contentWindow.postMessage({ type: "activate-mic" }, "*");
-          } else {
-            alert("Asistente no disponible.");
-          }
-        });
-      });
-    </script>
   </body>
 </html>
