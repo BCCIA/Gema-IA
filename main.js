@@ -21,7 +21,7 @@ if (!accesoPermitido()) {
   solicitarPin();
 }
 
-// -------------------- SEGURIDAD: BLOQUEO DE INSPECCIÓN --------------------
+// -------------------- SEGURIDAD --------------------
 document.addEventListener("contextmenu", (e) => e.preventDefault());
 
 function ctrlShiftKey(e, keyCode) {
@@ -30,11 +30,11 @@ function ctrlShiftKey(e, keyCode) {
 
 document.onkeydown = (e) => {
   if (
-    event.keyCode === 123 || // F12
-    ctrlShiftKey(e, "I") ||  // Ctrl+Shift+I
-    ctrlShiftKey(e, "J") ||  // Ctrl+Shift+J
-    ctrlShiftKey(e, "C") ||  // Ctrl+Shift+C
-    (e.ctrlKey && e.keyCode === "U".charCodeAt(0)) // Ctrl+U
+    event.keyCode === 123 ||
+    ctrlShiftKey(e, "I") ||
+    ctrlShiftKey(e, "J") ||
+    ctrlShiftKey(e, "C") ||
+    (e.ctrlKey && e.keyCode === "U".charCodeAt(0))
   )
     return false;
 };
@@ -42,7 +42,7 @@ document.onkeydown = (e) => {
 // -------------------- MENÚ --------------------
 const showMenu = (toggleId, navId) => {
   const toggle = document.getElementById(toggleId),
-        nav = document.getElementById(navId);
+    nav = document.getElementById(navId);
 
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
@@ -58,7 +58,7 @@ class DIDChat {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
     this.chatUrl =
-      "https://studio.d-id.com/agents/share?id=agt_ywE_DeEw&utm_source=copy&key=WVhWMGFEQjhOamRsT0RObVpqQTVZbU5tTXpSa1pEVmlZbVpsWVRNM09uQm5aR2xhYVdOSk1rdHFlVlpyYmpCdFRHaFRVQT09";
+      "https://studio.d-id.com/agents/share?id=agt_xQ9DjGPl&utm_source=copy&key=WVhWMGFEQjhOamRsT0RObVpqQTVZbU5tTXpSa1pEVmlZbVpsWVRNM09uQm5aR2xhYVdOSk1rdHFlVlpyYmpCdFRHaFRVQT09";
     this.iframe = null;
     this.init();
   }
@@ -148,7 +148,7 @@ gsap.from(".home-social", {
   stagger: 0.2,
 });
 
-// -------------------- REFRESCO AUTOMÁTICO CADA 3 MINUTOS --------------------
+// -------------------- REFRESCO AUTOMÁTICO --------------------
 function iniciarRefresco() {
   let refreshTimeout;
   let cancelRefresh = false;
@@ -160,7 +160,7 @@ function iniciarRefresco() {
     message.innerHTML = `
       <div style="display: flex; align-items: center; gap: 10px;">
         <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #fff; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite;"></div>
-        <span>Refrescando a GEMA...</span>
+        <span>Refrescando...</span>
       </div>
     `;
     message.style.position = "fixed";
@@ -196,7 +196,7 @@ function iniciarRefresco() {
       clearTimeout(refreshTimeout);
       document.removeEventListener("click", cancelAction);
       document.removeEventListener("touchstart", cancelAction);
-      setTimeout(startRefreshSequence, 3 * 60 * 1000); // ⏱️ reprograma a 3 min
+      setTimeout(startRefreshSequence, 3 * 60 * 1000);
     }
 
     document.addEventListener("click", cancelAction);
@@ -209,28 +209,17 @@ function iniciarRefresco() {
     }, 5000);
   }
 
-  setTimeout(startRefreshSequence, 3 * 60 * 1000); // ⏱️ primer ciclo en 3 min
+  setTimeout(startRefreshSequence, 3 * 60 * 1000);
 }
 
-// -------------------- BOTONES EXTERNOS (REFRESH Y MIC) --------------------
+window.addEventListener("DOMContentLoaded", iniciarRefresco);
+
 window.addEventListener("DOMContentLoaded", () => {
-  iniciarRefresco();
-
   const refreshBtn = document.getElementById("refresh-btn");
+
   if (refreshBtn) {
-    refreshBtn.addEventListener("click", () => location.reload());
+    refreshBtn.addEventListener("click", () => {
+      location.reload();
+    });
   }
-
- const micButton = document.getElementById("mic-toggle");
-
-if (micButton) {
-  micButton.addEventListener("click", () => {
-    const iframe = document.querySelector("iframe.did-chat-iframe");
-
-    const micBtn = iframe?.contentWindow?.document?.querySelector('[data-testid="send_record"]');
-    if (micBtn) {
-      micBtn.click();
-      console.log("🎤 Micrófono activado desde botón externo");
-    }
-  });
-}
+});
