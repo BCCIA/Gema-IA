@@ -11,19 +11,33 @@
     <div class="overlay first"></div>
     <div class="overlay second"></div>
     <div class="overlay third"></div>
+
     <main class="l-main bd-grid">
       <div class="home">
         <div class="home-information">
           <span class="home-pressent anime-text">Mi nombre es</span>
           <h1 class="home-title anime-text">Gema.</h1>
         </div>
+
         <div class="home-img">
+          <!-- 🟩 Contenedor del agente -->
           <div id="chat-container" class="fade-in"></div>
         </div>
       </div>
     </main>
 
-    <!-- ✅ Botón de refrescar (antes de los scripts) -->
+    <!-- ✅ Agente D-ID embebido -->
+    <script
+      type="module"
+      src="https://agent.d-id.com/v1/index.js"
+      data-name="did-agent"
+      data-mode="fabio"
+      data-client-key="Z29vZ2xlLW9hdXRoMnwxMTE4ODc5MTA4Mjc1NTA5ODc2MjE6V3VsZkE5c0JpRHRhenlDVHctdDFh"
+      data-agent-id="agt_IFidIPzC"
+      data-monitor="true">
+    </script>
+
+    <!-- ✅ Botón de refrescar -->
     <ion-icon id="refresh-btn" name="refresh-circle-outline" title="Actualizar página"></ion-icon>
 
     <!-- Scripts -->
@@ -31,11 +45,11 @@
     <script src="main.js"></script>
     <script
       type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
+    </script>
     <script
       nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js">
+    </script>
   </body>
 </html>
