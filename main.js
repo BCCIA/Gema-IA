@@ -53,7 +53,7 @@ document.onkeydown = (e) => {
 class DIDChat {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.chatUrl = "https://studio.d-id.com/agents/share?id=v2_agt_VTGbA4bQ&utm_source=copy&key=WjI5dloyeGxMVzloZFhSb01ud3hNVE01T1RNeE16WTJOak0yTkRVMU56VTJNek02TjBka1lrbDNPSGt6UTFKcGJITnRlbXh3V1hnNA==";
+    this.chatUrl = "https://studio.d-id.com/agents/share?id=v2_agt_7utoHQtl&utm_source=copy&key=Y2tfdjluUm12SUxTQ3hSQTMtckdrempE";
     this.iframe = null;
     this.init();
   }
@@ -164,17 +164,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoElement = document.getElementById('playback-video');
 
     if (!overlay || !btnShowAvatar || !btnPlayVideo || !videoElement) return;
-    const VIDEO_URL = "https://www.dropbox.com/scl/fi/gzgp3233crtqpitlv3ccb/0223.mp4?rlkey=ia1kcmnt8cqai8vso1ogiosna&st=uxtv7ko4&dl&raw=1";
+    const VIDEO_URL = "https://www.dropbox.com/scl/fi/bu8cpm09slawb896ypch4/Gema-Fotos.mp4?rlkey=04nzxdp24l67l3miiufckcpsq&st=j707ejqr&dl&raw=1";
+    const SECRET_VIDEO_URL = "https://www.dropbox.com/scl/fi/3t522av1nzuj1o8lyic6b/f85c6ddb984de7b73cc23500f356a62e_1.mp4?rlkey=ea7zosc8ynkxygszcurls1mvt&st=9y9p37q1&dl&raw=1";
     videoElement.src = VIDEO_URL;
+    let secretVideoActive = false;
+
+    function hideOverlay() {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.backdropFilter = 'none';
+        overlay.style.webkitBackdropFilter = 'none';
+        setTimeout(() => { overlay.style.display = 'none'; }, 600);
+    }
 
     function showOverlay() {
         videoElement.pause(); videoElement.currentTime = 0;
-        videoElement.classList.add('video-hidden'); overlay.classList.remove('overlay-hidden');
+        videoElement.classList.add('video-hidden');
+        if (secretVideoActive) {
+            secretVideoActive = false;
+            videoElement.src = VIDEO_URL;
+        }
+        overlay.style.display = '';
+        overlay.style.backdropFilter = '';
+        overlay.style.webkitBackdropFilter = '';
+        overlay.style.pointerEvents = '';
+        requestAnimationFrame(() => { overlay.style.opacity = ''; });
     }
+
     videoElement.addEventListener('ended', showOverlay);
-    btnShowAvatar.addEventListener('click', () => { overlay.classList.add('overlay-hidden'); });
+    btnShowAvatar.addEventListener('click', hideOverlay);
     btnPlayVideo.addEventListener('click', () => {
-        overlay.classList.add('overlay-hidden'); videoElement.classList.remove('video-hidden');
+        videoElement.src = VIDEO_URL;
+        hideOverlay();
+        videoElement.classList.remove('video-hidden');
         setTimeout(() => { videoElement.play().catch(e => console.warn("Autoplay bloqueado:", e)); }, 300);
     });
+
+    // --- Botón secreto: triple clic en la imagen del avatar ---
+    const avatarImg = document.querySelector('.overlay-avatar-img');
+    if (avatarImg) {
+        let clickCount = 0;
+        let clickTimer = null;
+
+        avatarImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clickCount++;
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 800);
+            }
+            if (clickCount >= 3) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                secretVideoActive = true;
+                videoElement.src = SECRET_VIDEO_URL;
+                hideOverlay();
+                videoElement.classList.remove('video-hidden');
+                setTimeout(() => { videoElement.play().catch(err => console.warn("Autoplay bloqueado:", err)); }, 300);
+            }
+        });
+    }
 });
