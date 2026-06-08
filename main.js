@@ -53,7 +53,7 @@ document.onkeydown = (e) => {
 class DIDChat {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.chatUrl = "https://studio.d-id.com/agents/share?id=v2_agt_7utoHQtl&utm_source=copy&key=Y2tfdjluUm12SUxTQ3hSQTMtckdrempE";
+    this.chatUrl = "https://studio.d-id.com/agents/share?id=v2_agt_y1pztrFI&utm_source=copy&key=Y2tfUlFRMzllcDBYT090bFFaTTNJWWxo";
     this.iframe = null;
     this.init();
   }
