@@ -49,31 +49,6 @@ document.onkeydown = (e) => {
   if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || (e.ctrlKey && e.keyCode === 85)) return false;
 };
 
-// -------------------- CHAT D-ID (AVATAR) --------------------
-class DIDChat {
-  constructor(containerId) {
-    this.container = document.getElementById(containerId);
-    this.chatUrl = "https://studio.d-id.com/agents/share?id=v2_agt_LnMK_GZ_&utm_source=copy&key=WjI5dloyeGxMVzloZFhSb01ud3hNVE01T1RNeE16WTJOak0yTkRVMU56VTJNek02TjBka1lrbDNPSGt6UTFKcGJITnRlbXh3V1hnNA==";
-    this.iframe = null;
-    this.init();
-  }
-  init() { if (this.container) this.createIframe(); }
-  // ... dentro de la clase DIDChat ...
-createIframe() {
-    const wrapper = document.createElement("div"); wrapper.className = "iframe-wrapper";
-    this.iframe = document.createElement("iframe");
-    this.iframe.className = "did-chat-iframe fade-in";
-    this.iframe.src = this.chatUrl;
-
-    // ✅ SOLUCIÓN MICROFONO: Se añade 'microphone *;' a los permisos del iframe
-    this.iframe.allow = "microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;";
-
-    this.iframe.title = "Avatar Interface";
-    wrapper.appendChild(this.iframe);
-    this.container.appendChild(wrapper);
-}
-}
-
 // ==================================================================
 // 🔥 INICIALIZACIÓN Y LÓGICA PRINCIPAL 🔥
 // ==================================================================
@@ -128,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 5. Inicializar el resto de la aplicación
-  new DIDChat("chat-container");
   gsap.to(".first", 1, { delay: 0.2, top: "-100%", ease: Expo.easeInOut });
   gsap.to(".second", 1, { delay: 0.4, top: "-100%", ease: Expo.easeInOut });
   gsap.to(".third", 1, { delay: 0.6, top: "-100%", ease: Expo.easeInOut });
